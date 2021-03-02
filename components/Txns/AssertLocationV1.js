@@ -5,7 +5,7 @@ import AccountIcon from '../AccountIcon'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import animalHash from 'angry-purple-tiger'
-import Client from '@helium/http'
+import { Client, Network } from '@helium/http'
 
 import { formatLocation } from '../Hotspots/utils'
 import { Balance, CurrencyType } from '@helium/currency'
@@ -21,7 +21,7 @@ const AssertLocationV1 = ({ txn }) => {
   useEffect(async () => {
     // make a client-side call to get the location (city, state, country) of the hotspot
     // TODO: make this call to the location endpoint (or equivalent helium-js function) instead for returning geo details for a given h3 index
-    const client = new Client()
+    const client = new Client(Network.testnet)
     const hotspotid = txn.gateway
     const hotspot = await client.hotspots.get(hotspotid)
     setHotspot(hotspot)

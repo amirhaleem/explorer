@@ -17,18 +17,6 @@ export const fetchOraclePrices = async () => {
   const response2 = await fetch(
     `https://testnet-api.helium.wtf/v1/oracle/prices?cursor=${cursor1}`,
   )
-  const { data: data2, cursor: cursor2 } = await response2.json()
-  prices.push(...data2)
-  const response3 = await fetch(
-    `https://testnet-api.helium.wtf/v1/oracle/prices?cursor=${cursor2}`,
-  )
-  const { data: data3, cursor: cursor3 } = await response3.json()
-  prices.push(...data3)
-  const response4 = await fetch(
-    `https://testnet-api.helium.wtf/v1/oracle/prices?cursor=${cursor3}`,
-  )
-  const { data: data4 } = await response4.json()
-  prices.push(...data4)
   return prices
 }
 

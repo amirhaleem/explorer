@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Typography, Descriptions, Tooltip } from 'antd'
-import Client from '@helium/http'
+import { Client, Network } from '@helium/http'
 import AppLayout, { Content } from '../../components/AppLayout'
 import ActivityList from '../../components/ActivityList'
 import HotspotsList from '../../components/HotspotsList'
@@ -39,7 +39,7 @@ const AccountView = ({ account }) => {
       setLoadingHotspots(true)
       setLoadingRewards(true)
 
-      const client = new Client()
+      const client = new Client(Network.testnet)
       const accountid = account.address
 
       const list = await client.account(accountid).hotspots.list()
@@ -251,7 +251,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const client = new Client()
+  const client = new Client(Network.testnet)
   const { accountid } = params
   const account = await client.accounts.get(accountid)
 

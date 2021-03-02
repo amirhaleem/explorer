@@ -1,8 +1,8 @@
 import useSWR from 'swr'
-import Client from '@helium/http'
+import { Client, Network } from '@helium/http'
 
 export const fetchStats = async () => {
-  const client = new Client()
+  const client = new Client(Network.testnet)
   const stats = await client.stats.get()
 
   return {
@@ -17,8 +17,8 @@ export const fetchStats = async () => {
     dataCredits: stats.stateChannelCounts.lastMonth.numDcs,
     totalHotspots: stats.counts.hotspots,
     totalBlocks: stats.counts.blocks,
-    totalCities: stats.counts.cities,
-    totalCountries: stats.counts.countries,
+    //totalCities: stats.counts.cities,
+    //totalCountries: stats.counts.countries,
   }
 }
 

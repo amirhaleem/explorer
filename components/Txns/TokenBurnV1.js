@@ -3,7 +3,7 @@ import { Descriptions, Skeleton } from 'antd'
 import Link from 'next/link'
 import AccountIcon from '../AccountIcon'
 import { Balance, CurrencyType } from '@helium/currency'
-import Client from '@helium/http'
+import { Client, Network } from '@helium/http'
 
 const InlineSkeleton = () => (
   <span className="inline-skeleton-override">
@@ -23,7 +23,7 @@ const TokenBurnV1 = ({ txn }) => {
 
   const [oraclePrice, setOraclePrice] = useState()
   useEffect(async () => {
-    const client = new Client()
+    const client = new Client(Network.testnet)
     const { price } = await client.oracle.getPriceAtBlock(txn.height)
     setOraclePrice(price)
   }, [])

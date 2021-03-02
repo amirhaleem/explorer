@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Table, Tooltip } from 'antd'
-import Client from '@helium/http'
+import { Client, Network } from '@helium/http'
 
 class BlocksList extends Component {
   state = {
@@ -9,7 +9,7 @@ class BlocksList extends Component {
   }
 
   async componentDidMount() {
-    const client = new Client()
+    const client = new Client(Network.testnet)
     this.list = await client.blocks.list()
     this.loadBlocks()
   }

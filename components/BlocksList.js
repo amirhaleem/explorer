@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Table, Typography } from 'antd'
 import Timestamp from 'react-timestamp'
-import Client from '@helium/http'
+import { Client, Network } from '@helium/http'
 import LoadMoreButton from './LoadMoreButton'
 const { Text } = Typography
 import Link from 'next/link'
@@ -13,7 +13,7 @@ class BlocksList extends Component {
   }
 
   async componentDidMount() {
-    const client = new Client()
+    const client = new Client(Network.testnet)
     this.list = await client.blocks.list()
     this.loadBlocks()
   }

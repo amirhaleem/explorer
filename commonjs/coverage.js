@@ -8,7 +8,7 @@ const toGeoJSON = (hotspots) =>
   })
 
 const getCoverage = async () => {
-  const client = new Client()
+  const client = new Client(Network.testnet)
   const hotspots = await client.hotspots.list()
   const result = {
     unset: 0,

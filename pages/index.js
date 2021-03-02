@@ -56,7 +56,7 @@ const Index = ({
           </span>
         }
       />
-      <TopChart
+      {/*<TopChart
         title="Oracle Price (30d)"
         subtitle={`${latestOraclePrice} (${formatDistanceToNow(
           new Date(oraclePrices[0].timestamp),
@@ -76,7 +76,7 @@ const Index = ({
               .reverse()}
           />
         }
-      />
+      />*/}
       <Content
         style={{
           marginTop: 0,
@@ -114,7 +114,7 @@ const Index = ({
               />
             </Col>
           </Row>
-          <div
+          {/*<div
             style={{
               background: '#fff',
               borderRadius: 10,
@@ -135,7 +135,7 @@ const Index = ({
                 </a>
               </Col>
             </Row>
-          </div>
+          </div>*/}
           <Row gutter={[20, 20]}>
             <Col xs={24} md={8}>
               <Widget
@@ -183,10 +183,10 @@ const Index = ({
                 href="/market"
               />
             </Col>
-            <Col xs={24} md={16}>
+            {/*<Col xs={24} md={16}>
               <HalvingCountdown />
-            </Col>
-            <Col xs={24} md={8}>
+            </Col>*/}
+            {/*<Col xs={24} md={8}>
               <Widget
                 title="Data Credits Spent (30d)"
                 value={stats.dataCredits.toLocaleString()}
@@ -203,7 +203,7 @@ const Index = ({
                 footer="View Market Data"
                 href="/market"
               />
-            </Col>
+              </Col>*/}
           </Row>
           <Card title="Latest Blocks" style={{ marginBottom: 60 }}>
             <BlocksList pageSize={10} showButton={false} />

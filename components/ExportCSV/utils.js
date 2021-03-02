@@ -1,5 +1,5 @@
 import animalHash from 'angry-purple-tiger'
-import Client from '@helium/http'
+import { Client, Network } from '@helium/http'
 import { Balance, CurrencyType } from '@helium/currency'
 import { fromUnixTime } from 'date-fns'
 
@@ -9,7 +9,7 @@ const getFee = async ({ height, fee }, convertFee) => {
   }
 
   if (convertFee) {
-    const client = new Client()
+    const client = new Client(Network.testnet)
     const { price: oraclePrice } = await client.oracle.getPriceAtBlock(height)
     const dcBalance = new Balance(fee.integerBalance, CurrencyType.dataCredit)
     const output = dcBalance

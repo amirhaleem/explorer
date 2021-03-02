@@ -1,9 +1,9 @@
 import useSWR from 'swr'
-import Client from '@helium/http'
+import { Client, Network } from '@helium/http'
 import qs from 'qs'
 
 export const fetchLatestHotspots = async (count = 20) => {
-  const client = new Client()
+  const client = new Client(Network.testnet)
   const hotspots = await (await client.hotspots.list()).take(count)
 
   return JSON.parse(JSON.stringify(hotspots))
@@ -23,7 +23,7 @@ export const useLatestHotspots = (initialData, count = 20) => {
 }
 
 const MAX = 100000
-const client = new Client()
+const client = new Client(Network.testnet)
 
 export const getHotspotRewardsSum = async (address, numDaysBack) => {
   const initialDate = new Date()

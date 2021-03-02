@@ -1,8 +1,8 @@
 import useSWR from 'swr'
-import Client from '@helium/http'
+import { Client, Network } from '@helium/http'
 
 export const fetchLatestBlocks = async (count = 100) => {
-  const client = new Client()
+  const client = new Client(Network.testnet)
   const blocks = await (await client.blocks.list()).take(count)
 
   return JSON.parse(JSON.stringify(blocks))

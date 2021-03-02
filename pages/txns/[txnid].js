@@ -7,7 +7,7 @@ import {
   LeftOutlined,
   RightOutlined,
 } from '@ant-design/icons'
-import Client from '@helium/http'
+import { Client, Network } from '@helium/http'
 import Timestamp from 'react-timestamp'
 import AppLayout, { Content } from '../../components/AppLayout'
 import PieChart from '../../components/PieChart'
@@ -145,7 +145,7 @@ const TxnView = ({ txn }) => {
   const [navigation, setNavigation] = useState()
 
   useEffect(async () => {
-    const client = new Client()
+    const client = new Client(Network.testnet)
     setTransactions(await client.block(txn.height).transactions.list())
   }, [txn.height])
 
@@ -278,7 +278,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const client = new Client()
+  const client = new Client(Network.testnet)
   const { txnid } = params
   let txn = await client.transactions.get(txnid)
 

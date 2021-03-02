@@ -1,8 +1,8 @@
 import useSWR from 'swr'
-import Client from '@helium/http'
+import { Client, Network } from '@helium/http'
 
 export const fetchElections = async () => {
-  const client = new Client()
+  const client = new Client(Network.testnet)
   const list = await client.elections.list()
   const elections = await list.take(20)
 

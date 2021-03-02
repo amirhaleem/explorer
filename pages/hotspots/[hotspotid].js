@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Row, Typography, Checkbox, Tooltip } from 'antd'
-import Client from '@helium/http'
+import { Client, Network } from '@helium/http'
 import Fade from 'react-reveal/Fade'
 import Checklist from '../../components/Hotspots/Checklist/Checklist'
 import RewardSummary from '../../components/Hotspots/RewardSummary'
@@ -64,7 +64,7 @@ const HotspotView = ({ hotspot }) => {
   }, [witnessesLoading, activityLoading, rewardsLoading, nearbyHotspotsLoading])
 
   useEffect(() => {
-    const client = new Client()
+    const client = new Client(Network.testnet)
     const hotspotid = hotspot.address
 
     async function getWitnesses() {
@@ -511,7 +511,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const client = new Client()
+  const client = new Client(Network.testnet)
   const { hotspotid } = params
   const hotspot = await client.hotspots.get(hotspotid)
 
