@@ -42,40 +42,6 @@ const Consensus = ({
   const { stats } = useStats(initialStats)
   const { consensusGroups } = useElections(initialElections)
 
-  const FlagSection = ({ group }) => {
-    const uniqueFlagShortcodes = []
-    group?.map((member) => {
-      if (
-        !uniqueFlagShortcodes.filter(
-          (f) => f.id === member.geocode.short_country,
-        ).length > 0
-      )
-        uniqueFlagShortcodes.push({
-          id: member.geocode.short_country,
-          fullCountryName: member.geocode.long_country,
-          count: 1,
-        })
-    })
-    return (
-      <div style={{ display: 'flex' }}>
-        {uniqueFlagShortcodes.map((flagId, flagIndex) => {
-          return (
-            <Tooltip title={flagId.fullCountryName} placement={'top'}>
-              <ReactCountryFlag
-                countryCode={flagId.id}
-                style={{
-                  fontSize: '2em',
-                  marginLeft: flagIndex === 0 ? '0' : '6px',
-                  lineHeight: '2em',
-                }}
-              />
-            </Tooltip>
-          )
-        })}
-      </div>
-    )
-  }
-
   return (
     <AppLayout
       title={'Consensus'}
@@ -87,13 +53,6 @@ const Consensus = ({
     >
       <TopBanner icon={ConsensusImg} title="Consensus" />
       <div
-        style={{ minHeight: 600, width: '100%', backgroundColor: '#324b61' }}
-      >
-        {consensusGroups.currentElection && (
-          <ConsensusMapbox members={consensusGroups.currentElection} />
-        )}
-      </div>
-      <div
         style={{
           width: '100%',
           padding: '0px 0',
@@ -102,9 +61,7 @@ const Consensus = ({
           alignItems: 'center',
           justifyContent: 'center',
         }}
-      >
-        <FlagSection group={consensusGroups.currentElection} />
-      </div>
+      ></div>
       <Content
         style={{
           margin: '0 auto',

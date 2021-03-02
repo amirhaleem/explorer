@@ -7,7 +7,9 @@ export const fetchElections = async () => {
   const elections = await list.take(20)
 
   // TODO: convert this to helium-js
-  const res = await fetch(`https://testnet-api.helium.wtf/v1/hotspots/elected`)
+  const res = await fetch(
+    `https://testnet-api.helium.wtf/v1/validators/elected`,
+  )
   const currentConsensusGroup = await res.json()
 
   return {

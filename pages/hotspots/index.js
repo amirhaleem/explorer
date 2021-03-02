@@ -23,7 +23,6 @@ const MiniCoverageMap = dynamic(
 )
 
 function Hotspots({
-  hotspotGrowth,
   onlineHotspotCount,
   latestHotspots: initialLatestHotspots,
   stats: initialStats,
@@ -44,10 +43,7 @@ function Hotspots({
     >
       <TopBanner icon={HotspotsImg} title="Hotspots" />
 
-      <TopChart
-        title="Hotspot Network Growth"
-        chart={<HotspotChart data={hotspotGrowth} />}
-      />
+      <TopChart title="Hotspot Network Growth" />
 
       <Content
         style={{
@@ -61,11 +57,6 @@ function Hotspots({
             <Widget
               title="Total Hotspots"
               value={totalHotspots.toLocaleString()}
-              change={
-                ((totalHotspots - hotspotGrowth.slice(-11, -10)[0].count) /
-                  totalHotspots) *
-                100
-              }
               changeSuffix="%"
             />
           </Col>
@@ -124,13 +115,6 @@ export async function getStaticProps() {
 
   const now = new Date()
 
-  const hotspotGrowth = [
-    {
-      time: getUnixTime(now),
-      count: stats.totalHotspots,
-    },
-  ]
-
   Array.from({ length: 39 }, (x, i) => {
     const date = sub(now, { weeks: i + 1 })
     // count hotspots where the time added is earlier than the given date
@@ -138,11 +122,6 @@ export async function getStaticProps() {
       hotspots,
       (h) => compareAsc(new Date(h.timestampAdded), date) === -1,
     ).true
-
-    hotspotGrowth.unshift({
-      time: getUnixTime(date),
-      count,
-    })
   })
 
   const onlineHotspotCount = countBy(
@@ -154,7 +133,6 @@ export async function getStaticProps() {
 
   return {
     props: {
-      hotspotGrowth,
       onlineHotspotCount,
       latestHotspots,
       stats,

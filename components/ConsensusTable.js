@@ -19,12 +19,12 @@ export const generateColumns = (columnType) => {
       render: (name, row, index) => index + 1,
     },
     {
-      title: 'Hotspot Name',
+      title: 'Validator Name',
       dataIndex: 'address',
       key: 'address',
       render: (address) => (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <Link href={`/hotspots/${address}`}>
+          <Link href={`/validators/${address}`}>
             <a style={{}}>{animalHash(address)}</a>
           </Link>
           {columnType === 'recent' && (
@@ -36,30 +36,6 @@ export const generateColumns = (columnType) => {
       ),
     },
   ]
-
-  const locationColumn = {
-    title: 'Location',
-    dataIndex: 'geocode',
-    key: 'geocode',
-    render: (geocode) => (
-      <p
-        style={{
-          color: '#555',
-        }}
-      >
-        <ReactCountryFlag
-          countryCode={geocode.short_country}
-          style={{
-            fontSize: '1.5em',
-            marginRight: '6px',
-            lineHeight: '1.5em',
-          }}
-        />
-        {formatLocation(geocode)}
-      </p>
-    ),
-  }
-  if (columnType === 'current') columns.push(locationColumn)
 
   return columns
 }

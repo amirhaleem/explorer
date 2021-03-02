@@ -7,7 +7,7 @@ class MapButton extends Component {
   render() {
     return (
       <Tooltip placement="bottomRight" title="View Interactive Coverage Map">
-        <Link href="/coverage">
+        <Link href="#">
           <a
             className="map-button"
             style={{

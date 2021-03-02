@@ -51,7 +51,7 @@ const Index = ({
             Welcome to
             <br />
             <span style={{ fontWeight: 600, color: '#32C48D' }}>
-              Helium Explorer
+              Helium ¡TESTNET! Explorer
             </span>
           </span>
         }
