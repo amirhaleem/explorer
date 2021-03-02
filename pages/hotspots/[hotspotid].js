@@ -71,7 +71,7 @@ const HotspotView = ({ hotspot }) => {
       setWitnessesLoading(true)
       // // TODO convert to use @helium/http
       const witnesses = await fetch(
-        `https://api.helium.io/v1/hotspots/${hotspotid}/witnesses`,
+        `https://testnet-api.helium.wtf/v1/hotspots/${hotspotid}/witnesses`,
       )
         .then((res) => res.json())
         .then((json) => json.data.filter((w) => !(w.address === hotspotid)))

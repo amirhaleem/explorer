@@ -40,7 +40,7 @@ const PocReceiptsV1 = ({ txn }) => {
   const [pocH3CellResolution, setPocH3CellResolution] = useState(11)
 
   useEffect(async () => {
-    await fetch('https://api.helium.io/v1/vars/poc_v4_parent_res')
+    await fetch('https://testnet-api.helium.wtf/v1/vars/poc_v4_parent_res')
       .then((res) => res.json())
       .then((resolution) => {
         setPocH3CellResolution(resolution.data)
