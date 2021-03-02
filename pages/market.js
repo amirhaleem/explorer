@@ -22,15 +22,7 @@ function Market({
   const { stats } = useStats(initialStats)
   const { oraclePrices } = useOraclePrices(initialOraclePrices)
 
-  const latestOraclePrice = (oraclePrices[0].price / 100000000).toLocaleString(
-    'en-US',
-    {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 4,
-    },
-  )
+  const latestOraclePrice = '$4'
 
   return (
     <AppLayout
@@ -94,11 +86,6 @@ function Market({
             <Widget
               title="Oracle Price"
               value={latestOraclePrice}
-              change={
-                ((oraclePrices[0].price - oraclePrices[1].price) /
-                  oraclePrices[1].price) *
-                100
-              }
               changePrecision={2}
               changeSuffix="%"
               tooltip="The Oracle price is used to determine how many DC are produced when burning HNT"

@@ -23,7 +23,6 @@ const MiniCoverageMap = dynamic(
 )
 
 function Hotspots({
-  onlineHotspotCount,
   latestHotspots: initialLatestHotspots,
   stats: initialStats,
 }) {
@@ -54,26 +53,13 @@ function Hotspots({
       >
         <Row gutter={[20, 20]}>
           <Col xs={24} md={6}>
-            <Widget
-              title="Total Hotspots"
-              value={totalHotspots.toLocaleString()}
-              changeSuffix="%"
-            />
-          </Col>
-          <Col xs={24} md={6}>
-            <Widget
-              title="Hotspots Online"
-              value={onlineHotspotCount.toLocaleString()}
-              change={(onlineHotspotCount / totalHotspots) * 100}
-              changeSuffix="%"
-              changeIsAmbivalent
-            />
+            <Widget title="Total Hotspots" value={0} changeSuffix="%" />
           </Col>
           <Col xs={12} md={6}>
-            <Widget title="Cities" value={totalCities.toLocaleString()} />
+            <Widget title="Cities" value={0} />
           </Col>
           <Col xs={12} md={6}>
-            <Widget title="Countries" value={totalCountries.toLocaleString()} />
+            <Widget title="Countries" value={0} />
           </Col>
         </Row>
 
@@ -124,16 +110,10 @@ export async function getStaticProps() {
     ).true
   })
 
-  const onlineHotspotCount = countBy(
-    hotspots,
-    (h) => h.status.online === 'online',
-  ).true
-
   const latestHotspots = JSON.parse(JSON.stringify(hotspots.slice(0, 20)))
 
   return {
     props: {
-      onlineHotspotCount,
       latestHotspots,
       stats,
     },
