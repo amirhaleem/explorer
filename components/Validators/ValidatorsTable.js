@@ -127,7 +127,7 @@ export const generateColumns = () => {
   return columns
 }
 
-const ValidatorsTable = ({ dataSource, loading }) => {
+const ValidatorsTable = ({ dataSource = [], loading }) => {
   const columns = generateColumns()
 
   return (
