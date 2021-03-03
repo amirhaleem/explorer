@@ -92,7 +92,7 @@ const Index = ({
               <Widget
                 title="Hotspots"
                 value={stats.totalHotspots.toLocaleString()}
-                tooltip="The Helium network is made up of thousands of hotspots providing coverage around the globe"
+                tooltip="The Helium network is made up of thousands of hotspots providing coverage around the globe "
                 footer="View Hotspots"
                 href="/hotspots"
               />
