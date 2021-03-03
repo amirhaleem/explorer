@@ -109,8 +109,8 @@ const Index = ({
               <Widget
                 title="Consensus Groups"
                 value={stats.consensusGroups.toLocaleString()}
-                footer="View Consensus Groups"
-                href="/consensus"
+                footer="View Validators"
+                href="/validators"
               />
             </Col>
           </Row>
@@ -147,8 +147,8 @@ const Index = ({
                 }
                 changeSuffix=" min"
                 changeUpIsBad
-                footer="View Consensus Groups"
-                href="/consensus"
+                footer="View Validators"
+                href="/validators"
               />
             </Col>
             <Col xs={24} md={8}>

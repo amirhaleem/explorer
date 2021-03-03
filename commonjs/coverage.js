@@ -1,4 +1,4 @@
-const { Client } = require('@helium/http')
+const { Client, Network } = require('@helium/http')
 const geoJSON = require('geojson')
 
 const toGeoJSON = (hotspots) =>
