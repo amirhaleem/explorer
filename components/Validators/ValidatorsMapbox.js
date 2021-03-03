@@ -31,7 +31,6 @@ const ValidatorsMapbox = ({ validators }) => {
   const router = useRouter()
 
   const validatorsWithLocation = validators.filter((v) => v?.geo?.latitude)
-  console.log('vwl', validatorsWithLocation)
 
   const [mapBounds, setMapBounds] = useState(
     findBounds(
