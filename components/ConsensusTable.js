@@ -47,7 +47,7 @@ const ConsensusTable = ({ dataSource, columns, loading }) => {
       columns={columns}
       loading={loading}
       pagination={{
-        pageSize: 16,
+        pageSize: 100,
         showSizeChanger: false,
         hideOnSinglePage: true,
       }}
