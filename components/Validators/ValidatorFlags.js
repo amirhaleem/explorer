@@ -3,7 +3,7 @@ import { Tooltip } from 'antd'
 import { uniqBy } from 'lodash'
 import ReactCountryFlag from 'react-country-flag'
 
-const ValidatorFlags = ({ validators }) => {
+const ValidatorFlags = ({ validators = [] }) => {
   const codes = validators
     .map((v) => ({
       code: v?.geo?.country_code,
