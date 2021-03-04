@@ -17,6 +17,7 @@ export const fetchStats = async () => {
     dataCredits: stats.stateChannelCounts.lastMonth.numDcs,
     totalHotspots: stats.counts.hotspots,
     totalBlocks: stats.counts.blocks,
+    validators: stats.validators,
     //totalCities: stats.counts.cities,
     //totalCountries: stats.counts.countries,
   }

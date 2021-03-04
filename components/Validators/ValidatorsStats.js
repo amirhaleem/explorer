@@ -15,7 +15,7 @@ const ValidatorsStats = ({ height, heightLoading }) => {
 
   if (isLoadingStats || isLoadingGroups || isLoadingValidators) return null
 
-  const totalStaked = sum(validators.map((v) => v.stake / 100000000))
+  const totalStaked = stats?.validators?.staked?.amount || 0
   const activeValidators = validators.filter(
     (v) => v?.status?.online === 'online',
   ).length

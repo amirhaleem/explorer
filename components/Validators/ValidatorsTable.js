@@ -96,7 +96,7 @@ export const generateColumns = () => {
       render: (geo) => {
         if (!geo || !geo.country_code) return null
         return (
-          <p
+          <span
             style={{
               color: '#555',
             }}
@@ -112,7 +112,7 @@ export const generateColumns = () => {
             {[geo.city, geo.region_code, geo.country_code]
               .filter((g) => !!g)
               .join(', ')}
-          </p>
+          </span>
         )
       },
     },
@@ -123,13 +123,13 @@ export const generateColumns = () => {
       render: (geo) => {
         if (!geo || !geo.isp) return null
         return (
-          <p
+          <span
             style={{
               color: '#555',
             }}
           >
             {geo.isp}
-          </p>
+          </span>
         )
       },
     },
@@ -145,13 +145,13 @@ export const generateColumns = () => {
         if (regionMatch) {
           const region = regionMatch[1]
           return (
-            <p
+            <span
               style={{
                 color: '#555',
               }}
             >
               {region}
-            </p>
+            </span>
           )
         }
       },
