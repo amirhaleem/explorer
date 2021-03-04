@@ -2,33 +2,63 @@ import React from 'react'
 import { Card, Row, Col, Tooltip, Typography, Table, Collapse } from 'antd'
 import { useStats } from '../../data/stats'
 import { useElections } from '../../data/consensus'
+import { useValidators } from '../../data/validators'
 import { formatDistanceToNow, format } from 'date-fns'
 import Widget from '../Home/Widget'
 import withBlockHeight from '../withBlockHeight'
-import round from 'lodash/round'
+import { round, sum } from 'lodash'
 
 const ValidatorsStats = ({ height, heightLoading }) => {
   const { isLoading: isLoadingStats, stats } = useStats()
   const { isLoading: isLoadingGroups, consensusGroups } = useElections()
+  const { isLoading: isLoadingValidators, validators } = useValidators()
 
-  if (isLoadingStats || isLoadingGroups) return null
+  if (isLoadingStats || isLoadingGroups || isLoadingValidators) return null
+
+  const totalStaked = sum(validators.map((v) => v.stake / 100000000))
+  const activeValidators = validators.filter(
+    (v) => v?.status?.online === 'online',
+  ).length
 
   return (
     <Row gutter={[20, 20]}>
-      <Col xs={24} md={12} lg={8}>
+      <Col xs={24} md={12} lg={6}>
         <Widget
-          title="Election Times (1h)"
-          value={`${round(
-            stats.electionTimes.lastHour.avg / 60,
-            1,
-          ).toLocaleString()} min`}
-          subtitle={`${round(
-            stats.electionTimes.lastHour.stddev / 60,
-            1,
-          ).toLocaleString()} min std dev`}
+          title="Total Validators"
+          value={validators.length.toLocaleString()}
+          subtitle={`${activeValidators.toLocaleString()} Online`}
         />
       </Col>
-      <Col xs={24} md={12} lg={8}>
+      <Col xs={24} md={12} lg={6}>
+        <Widget
+          title="Consensus Group Size"
+          value={validators.filter((v) => v.elected).length.toLocaleString()}
+          subtitle={`${validators
+            .filter((v) => v.elected && v?.status?.online === 'online')
+            .length.toLocaleString()} Online`}
+        />
+      </Col>
+      <Col xs={24} md={12} lg={6}>
+        <Widget
+          title="Total Staked"
+          value={`${totalStaked.toLocaleString()} TNT`}
+          subtitle={`${round(
+            (totalStaked / stats.circulatingSupply) * 100,
+            4,
+          )}% of Supply`}
+        />
+      </Col>
+      <Col xs={24} md={12} lg={6}>
+        <Widget
+          title="Estimated APY"
+          value={`${round(
+            (((300000 / activeValidators) * 12) / 10000) * 100,
+            2,
+          )}%`}
+          subtitle="Pre-halving"
+        />
+      </Col>
+      <Col xs={24} md={12} lg={6}>
         <Widget
           title="Election Times (24h)"
           value={`${round(
@@ -41,20 +71,7 @@ const ValidatorsStats = ({ height, heightLoading }) => {
           ).toLocaleString()} min std dev`}
         />
       </Col>
-      <Col xs={24} md={12} lg={8}>
-        <Widget
-          title="Election Times (7d)"
-          value={`${round(
-            stats.electionTimes.lastWeek.avg / 60,
-            1,
-          ).toLocaleString()} min`}
-          subtitle={`${round(
-            stats.electionTimes.lastWeek.stddev / 60,
-            1,
-          ).toLocaleString()} min std dev`}
-        />
-      </Col>
-      <Col xs={24} md={12} lg={8}>
+      <Col xs={24} md={12} lg={6}>
         <Widget
           title="Election Times (30d)"
           value={`${round(
@@ -67,7 +84,7 @@ const ValidatorsStats = ({ height, heightLoading }) => {
           ).toLocaleString()} min std dev`}
         />
       </Col>
-      <Col xs={24} md={12} lg={8}>
+      <Col xs={24} md={12} lg={6}>
         <Widget
           title="Time since last election"
           value={formatDistanceToNow(
@@ -80,7 +97,7 @@ const ValidatorsStats = ({ height, heightLoading }) => {
           tooltip="Time elapsed since the most recent consensus election transaction"
         />
       </Col>
-      <Col xs={24} md={12} lg={8}>
+      <Col xs={24} md={12} lg={6}>
         <Widget
           title="Blocks since last election"
           value={

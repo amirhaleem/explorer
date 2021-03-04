@@ -17,12 +17,19 @@ function title(online, listen_addrs) {
   return capitalize(online)
 }
 
+const black = '#000'
 const green = '#29D391'
 const yellow = '#FFC769'
 
 function color(online, listen_addrs) {
   if (isRelay(listen_addrs)) return yellow
   if (online === 'online') return green
+  return yellow
+}
+
+function textColor(online, listen_addrs) {
+  if (isRelay(listen_addrs)) return yellow
+  if (online === 'online') return black
   return yellow
 }
 
@@ -33,7 +40,11 @@ const ValidatorStatus = ({
     height: null,
   },
 }) => (
-  <span>
+  <span
+    style={{
+      color: textColor(online, listen_addrs),
+    }}
+  >
     <span
       style={{
         width: '10px',
@@ -44,7 +55,6 @@ const ValidatorStatus = ({
         marginRight: '6px',
       }}
     />
-
     {title(online, listen_addrs)}
   </span>
 )

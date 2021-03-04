@@ -15,9 +15,11 @@ export const generateColumns = () => {
   const columns = [
     {
       title: 'Number',
-      dataIndex: 'index',
-      key: 'index',
-      render: (name, row, index) => index + 1,
+      dataIndex: 'number',
+      key: 'number',
+      render: (num) => '#' + num,
+      sorter: (a, b) => a.number - b.number,
+      defaultSortOrder: 'desc',
     },
     {
       title: 'Validator Name',
@@ -30,12 +32,12 @@ export const generateColumns = () => {
       ),
     },
     {
-      title: 'HNT Staked',
+      title: 'TNT Staked',
       dataIndex: 'stake',
       key: 'stake',
       render: (stake) => (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          {(stake / 100000000).toLocaleString()} HNT
+          {(stake / 100000000).toLocaleString()} TNT
         </div>
       ),
     },
@@ -54,6 +56,38 @@ export const generateColumns = () => {
           <ValidatorStatus status={status} />
         </div>
       ),
+    },
+    {
+      title: 'Elected',
+      dataIndex: 'elected',
+      key: 'elected',
+      sorter: (a, b) => a.elected - b.elected,
+      sortDirections: ['descend'],
+      render: (elected) => {
+        if (!elected) return null
+        return (
+          <span
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              fontWeight: '500',
+            }}
+          >
+            <span
+              style={{
+                width: '10px',
+                height: '10px',
+                borderRadius: '10px',
+                background: '#9d6aee',
+                display: 'inline-block',
+                marginRight: '6px',
+              }}
+            />
+            In Consensus
+          </span>
+        )
+      },
     },
     {
       title: 'Location',
@@ -136,7 +170,7 @@ const ValidatorsTable = ({ dataSource = [], loading }) => {
       columns={columns}
       loading={loading}
       pagination={{
-        pageSize: 100,
+        pageSize: 200,
         showSizeChanger: false,
         hideOnSinglePage: true,
       }}

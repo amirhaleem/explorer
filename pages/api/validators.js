@@ -36,11 +36,18 @@ const getGeo = async (validator) => {
 
 const fetchValidators = async () => {
   const validators = await fetchAll('/validators')
+  const elected = await fetchAll('/validators/elected')
+  const electedAddresses = elected.map((e) => e.address)
   const validatorsWithGeo = []
 
-  await asyncForEach(validators, async (v) => {
+  await asyncForEach(validators, async (v, i) => {
     const geo = await getGeo(v)
-    validatorsWithGeo.push({ ...v, geo: geo || {} })
+    validatorsWithGeo.push({
+      ...v,
+      geo: geo || {},
+      elected: electedAddresses.includes(v.address),
+      number: validators.length - i,
+    })
   })
 
   return validatorsWithGeo
