@@ -96,7 +96,7 @@ const ValidatorsMapbox = ({ validators = [] }) => {
               coordinates={[m?.geo?.longitude, m?.geo?.latitude]}
               onClick={() => router.push(`/hotspots/${m.address}`)}
             >
-              <p
+              <span
                 className="consensus-mapbox-hover-text"
                 style={{
                   color: 'white',
@@ -105,8 +105,8 @@ const ValidatorsMapbox = ({ validators = [] }) => {
                   fontWeight: 800,
                 }}
               >
-                {idx + 1}
-              </p>
+                {m.number}
+              </span>
             </Marker>
           </Tooltip>
         )

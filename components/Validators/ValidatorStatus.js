@@ -43,6 +43,7 @@ const ValidatorStatus = ({
   <span
     style={{
       color: textColor(online, listen_addrs),
+      whiteSpace: 'nowrap',
     }}
   >
     <span

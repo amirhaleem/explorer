@@ -18,6 +18,7 @@ const Map = dynamic(() => import('../components/Validators/ValidatorsMapbox'), {
 
 const Consensus = () => {
   const { validators } = useValidators()
+  const elected = (validators || []).filter((v) => v.elected)
 
   return (
     <AppLayout
@@ -32,7 +33,7 @@ const Consensus = () => {
       <div
         style={{ minHeight: 600, width: '100%', backgroundColor: '#324b61' }}
       >
-        <Map validators={validators} />
+        <Map validators={elected} />
       </div>
       <div
         style={{
@@ -44,12 +45,12 @@ const Consensus = () => {
           justifyContent: 'center',
         }}
       >
-        <ValidatorFlags validators={validators} />
+        <ValidatorFlags validators={elected} />
       </div>
       <Content
         style={{
           margin: '0 auto',
-          maxWidth: 1400,
+          maxWidth: 1500,
           padding: '40px 20px 100px',
         }}
       >

@@ -1,9 +1,10 @@
 import React from 'react'
 import Link from 'next/link'
-import { Table, Typography } from 'antd'
+import { Table, Typography, Tooltip } from 'antd'
 import animalHash from 'angry-purple-tiger'
 import ReactCountryFlag from 'react-country-flag'
 import ValidatorStatus from './ValidatorStatus'
+import { truncate, upperCase } from 'lodash'
 
 const { Text } = Typography
 
@@ -11,10 +12,25 @@ export const makeArrayWorkWithAntTable = (incomingArray) => {
   return incomingArray.map((item, index) => ({ index, address: item }))
 }
 
+const formatISP = (isp) => {
+  if (isp.match(/-/)) {
+    return upperCase(isp.split('-')[0])
+  }
+  if (isp.length < 24 && isp.match(/,/)) {
+    return upperCase(isp.split(',')[0])
+  }
+  return upperCase(
+    truncate(isp, {
+      length: 18,
+      separator: ' ',
+    }),
+  )
+}
+
 export const generateColumns = () => {
   const columns = [
     {
-      title: 'Number',
+      title: '#',
       dataIndex: 'number',
       key: 'number',
       render: (num) => '#' + num,
@@ -35,9 +51,23 @@ export const generateColumns = () => {
       title: 'TNT Staked',
       dataIndex: 'stake',
       key: 'stake',
+      sorter: (a, b) => a.stake - b.stake,
       render: (stake) => (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           {(stake / 100000000).toLocaleString()} TNT
+        </div>
+      ),
+    },
+    {
+      title: 'TNT Earned (30d)',
+      dataIndex: 'rewards',
+      key: 'rewards',
+      sorter: (a, b) =>
+        (a?.rewards?.month?.total || 0) - (b?.rewards?.month?.total || 0),
+      sortDirections: ['descend'],
+      render: (rewards) => (
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          {rewards?.month?.total?.toLocaleString()} TNT
         </div>
       ),
     },
@@ -72,6 +102,7 @@ export const generateColumns = () => {
               flexDirection: 'row',
               alignItems: 'center',
               fontWeight: '500',
+              whiteSpace: 'nowrap',
             }}
           >
             <span
@@ -123,13 +154,14 @@ export const generateColumns = () => {
       render: (geo) => {
         if (!geo || !geo.isp) return null
         return (
-          <span
+          <Tooltip
+            title={geo.isp}
             style={{
               color: '#555',
             }}
           >
-            {geo.isp}
-          </span>
+            {formatISP(geo.isp)}
+          </Tooltip>
         )
       },
     },
