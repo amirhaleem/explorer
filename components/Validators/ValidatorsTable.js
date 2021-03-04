@@ -4,7 +4,9 @@ import { Table, Typography, Tooltip } from 'antd'
 import animalHash from 'angry-purple-tiger'
 import ReactCountryFlag from 'react-country-flag'
 import ValidatorStatus from './ValidatorStatus'
+import ConsensusIndicator from './ConsensusIndicator'
 import { truncate, upperCase } from 'lodash'
+import { useElections } from '../../data/consensus'
 
 const { Text } = Typography
 
@@ -27,7 +29,7 @@ const formatISP = (isp) => {
   )
 }
 
-export const generateColumns = () => {
+export const generateColumns = (recentGroups) => {
   const columns = [
     {
       title: '#',
@@ -89,36 +91,13 @@ export const generateColumns = () => {
     },
     {
       title: 'Elected',
-      dataIndex: 'elected',
+      dataIndex: 'address',
       key: 'elected',
       sorter: (a, b) => a.elected - b.elected,
       sortDirections: ['descend'],
-      render: (elected) => {
-        if (!elected) return null
-        return (
-          <span
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              fontWeight: '500',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            <span
-              style={{
-                width: '10px',
-                height: '10px',
-                borderRadius: '10px',
-                background: '#9d6aee',
-                display: 'inline-block',
-                marginRight: '6px',
-              }}
-            />
-            In Consensus
-          </span>
-        )
-      },
+      render: (address) => (
+        <ConsensusIndicator address={address} recentGroups={recentGroups} />
+      ),
     },
     {
       title: 'Location',
@@ -194,7 +173,9 @@ export const generateColumns = () => {
 }
 
 const ValidatorsTable = ({ dataSource = [], loading }) => {
-  const columns = generateColumns()
+  const { consensusGroups } = useElections()
+  const recentGroups = consensusGroups?.recentElections || []
+  const columns = generateColumns(recentGroups)
 
   return (
     <Table
