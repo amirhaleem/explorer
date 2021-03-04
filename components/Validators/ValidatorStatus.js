@@ -20,16 +20,19 @@ function title(online, listen_addrs) {
 const black = '#000'
 const green = '#29D391'
 const yellow = '#FFC769'
+const gray = '#ccc'
 
 function color(online, listen_addrs) {
   if (isRelay(listen_addrs)) return yellow
   if (online === 'online') return green
+  if (online === 'offline') return gray
   return yellow
 }
 
 function textColor(online, listen_addrs) {
   if (isRelay(listen_addrs)) return yellow
   if (online === 'online') return black
+  if (online === 'offline') return black
   return yellow
 }
 

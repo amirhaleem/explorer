@@ -44,7 +44,7 @@ const fetchRewards = (address) => async () => {
 
 const getRewards = async ({ address }) => {
   return getCache(`validator:rewards:30d:${address}`, fetchRewards(address), {
-    ttl: 60 * 60,
+    ttl: 60 * 5,
   })
 }
 

@@ -37,7 +37,6 @@ export const generateColumns = (recentGroups) => {
       key: 'number',
       render: (num) => '#' + num,
       sorter: (a, b) => a.number - b.number,
-      defaultSortOrder: 'desc',
     },
     {
       title: 'Validator Name',
@@ -95,6 +94,7 @@ export const generateColumns = (recentGroups) => {
       key: 'elected',
       sorter: (a, b) => a.elected - b.elected,
       sortDirections: ['descend'],
+      defaultSortOrder: 'desc',
       render: (address) => (
         <ConsensusIndicator address={address} recentGroups={recentGroups} />
       ),

@@ -13,7 +13,7 @@ export const useValidators = () => {
     refreshInterval: 10000,
   })
   return {
-    validators: data,
+    validators: data || [],
     isLoading: !error && !data,
     isError: error,
   }
