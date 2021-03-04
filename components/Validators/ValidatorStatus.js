@@ -1,5 +1,6 @@
 import React from 'react'
 import { capitalize } from 'lodash'
+import { Tooltip } from 'antd'
 
 function isRelay(listen_addrs) {
   return !!(
@@ -9,31 +10,33 @@ function isRelay(listen_addrs) {
   )
 }
 
-function title(online, listen_addrs) {
-  if (!online) return 'New'
-  if (isRelay(listen_addrs)) {
-    return 'Relay'
-  }
-  return capitalize(online)
-}
-
 const black = '#000'
 const green = '#29D391'
 const yellow = '#FFC769'
 const gray = '#ccc'
 
-function color(online, listen_addrs) {
-  if (isRelay(listen_addrs)) return yellow
-  if (online === 'online') return green
-  if (online === 'offline') return gray
-  return yellow
+const circleColor = {
+  relay: yellow,
+  online: green,
+  offline: gray,
 }
 
-function textColor(online, listen_addrs) {
-  if (isRelay(listen_addrs)) return yellow
-  if (online === 'online') return black
-  if (online === 'offline') return black
-  return yellow
+const textColor = {
+  relay: yellow,
+  online: black,
+  offline: black,
+}
+
+const tooltipTitle = {
+  relay:
+    'Validators operating behind a relay are not directly reachable and may degrade consensus performance',
+  online: 'Validator is online',
+  offline: 'Validator is offline',
+}
+
+function getStatus(online, listen_addrs) {
+  if (isRelay(listen_addrs)) return 'relay'
+  return online
 }
 
 const ValidatorStatus = ({
@@ -42,25 +45,31 @@ const ValidatorStatus = ({
     listen_addrs: null,
     height: null,
   },
-}) => (
-  <span
-    style={{
-      color: textColor(online, listen_addrs),
-      whiteSpace: 'nowrap',
-    }}
-  >
-    <span
-      style={{
-        width: '10px',
-        height: '10px',
-        borderRadius: '10px',
-        background: color(online, listen_addrs),
-        display: 'inline-block',
-        marginRight: '6px',
-      }}
-    />
-    {title(online, listen_addrs)}
-  </span>
-)
+}) => {
+  const status = getStatus(online, listen_addrs)
+
+  return (
+    <Tooltip title={tooltipTitle[status]}>
+      <span
+        style={{
+          color: textColor[status],
+          whiteSpace: 'nowrap',
+        }}
+      >
+        <span
+          style={{
+            width: '10px',
+            height: '10px',
+            borderRadius: '10px',
+            background: circleColor[status],
+            display: 'inline-block',
+            marginRight: '6px',
+          }}
+        />
+        {capitalize(status)}
+      </span>
+    </Tooltip>
+  )
+}
 
 export default ValidatorStatus
