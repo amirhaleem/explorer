@@ -60,8 +60,10 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "node server.js",
+    "build": "yarn build:next && yarn build:server",
+    "build:next": "next build",
+    "build:server": "NODE_ENV=production babel server --out-dir .next/dist",
+    "start": "NODE_ENV=production node .next/dist/server.js",
     "pretty": "prettier --write \"./**/*.{js,jsx,json,css}\"",
     "job": "eval $(cat .env) node"
   },
