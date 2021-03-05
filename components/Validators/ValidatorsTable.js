@@ -6,7 +6,11 @@ import ReactCountryFlag from 'react-country-flag'
 import ValidatorStatus from './ValidatorStatus'
 import ConsensusIndicator from './ConsensusIndicator'
 import { truncate, upperCase } from 'lodash'
+import { StarOutlined, StarFilled } from '@ant-design/icons'
+import createPersistedState from 'use-persisted-state'
 import { useElections } from '../../data/consensus'
+
+const useFavoriteValidatorsState = createPersistedState('favoriteValidators')
 
 const { Text } = Typography
 
@@ -29,8 +33,39 @@ const formatISP = (isp) => {
   )
 }
 
-export const generateColumns = (recentGroups) => {
+export const generateColumns = (
+  recentGroups,
+  favoriteValidators,
+  toggleFavoriteValidators,
+) => {
   const columns = [
+    {
+      title: '',
+      dataIndex: 'address',
+      key: 'favorite',
+      render: (address) => (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            cursor: 'pointer',
+          }}
+          onClick={toggleFavoriteValidators(address)}
+        >
+          {favoriteValidators[address] ? (
+            <StarFilled style={{ color: '#f1c40f' }} />
+          ) : (
+            <StarOutlined style={{ color: '#ccc' }} />
+          )}
+        </div>
+      ),
+      sortDirections: ['descend'],
+      sorter: (a, b) =>
+        (favoriteValidators[a.address] ? 1 : 0) -
+        (favoriteValidators[b.address] ? 1 : 0),
+    },
     {
       title: '#',
       dataIndex: 'number',
@@ -42,10 +77,19 @@ export const generateColumns = (recentGroups) => {
       title: 'Validator Name',
       dataIndex: 'address',
       key: 'address',
-      render: (address) => (
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+      render: (address, validator) => (
+        // <Link href={`/validators/${address}`} prefetch={false}>
+        // <a>
+        <span
+          style={{
+            fontWeight: validator?.elected ? '600' : 'normal',
+            color: validator?.elected ? '#9d6aee' : 'black',
+          }}
+        >
           {animalHash(address)}
-        </div>
+        </span>
+        // </a>
+        // </Link>
       ),
     },
     {
@@ -175,7 +219,25 @@ export const generateColumns = (recentGroups) => {
 const ValidatorsTable = ({ dataSource = [], loading }) => {
   const { consensusGroups } = useElections()
   const recentGroups = consensusGroups?.recentElections || []
-  const columns = generateColumns(recentGroups)
+  const [
+    favoriteValidators,
+    setFavoriteValidators,
+  ] = useFavoriteValidatorsState({})
+  console.log('fav', favoriteValidators)
+
+  const toggleFavoriteValidators = (address) => () => {
+    console.log('toggle fav validators', address, favoriteValidators)
+    setFavoriteValidators({
+      ...favoriteValidators,
+      [address]: !favoriteValidators[address],
+    })
+  }
+
+  const columns = generateColumns(
+    recentGroups,
+    favoriteValidators,
+    toggleFavoriteValidators,
+  )
 
   return (
     <Table

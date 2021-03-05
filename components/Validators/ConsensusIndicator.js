@@ -14,7 +14,7 @@ const ConsensusIndicator = ({ address, recentGroups }) => {
         whiteSpace: 'nowrap',
       }}
     >
-      {lastGroups.map(({ members, height }) => {
+      {lastGroups.map(({ members, height }, i) => {
         const elected = members.includes(address)
         return (
           <Tooltip
@@ -29,6 +29,7 @@ const ConsensusIndicator = ({ address, recentGroups }) => {
                 background: elected ? '#9d6aee' : '#ccc',
                 display: 'inline-block',
                 marginRight: '6px',
+                opacity: i === lastGroups.length - 1 ? 1 : 0.6,
               }}
             />
           </Tooltip>
