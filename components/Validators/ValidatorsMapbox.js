@@ -18,7 +18,8 @@ const styles = {
     width: 24,
     height: 24,
     borderRadius: '50%',
-    backgroundColor: '#474DFF',
+    backgroundColor: '#A334FB',
+    border: 'none',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -100,9 +101,8 @@ const ValidatorsMapbox = ({ validators = [] }) => {
                 className="consensus-mapbox-hover-text"
                 style={{
                   color: 'white',
-                  textShadow: '0px 2px rgba(0,0,0,0.5)',
                   fontFamily: 'Inter',
-                  fontWeight: 800,
+                  fontWeight: 600,
                 }}
               >
                 {m.number}
