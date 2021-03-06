@@ -9,6 +9,7 @@ import { truncate, upperCase } from 'lodash'
 import { StarOutlined, StarFilled } from '@ant-design/icons'
 import createPersistedState from 'use-persisted-state'
 import { useElections } from '../../data/consensus'
+import InlineSkeleton from '../InlineSkeleton'
 
 const useFavoriteValidatorsState = createPersistedState('favoriteValidators')
 
@@ -112,7 +113,11 @@ export const generateColumns = (
       sortDirections: ['descend'],
       render: (rewards) => (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          {rewards?.month?.total?.toLocaleString()} TNT
+          {rewards?.month?.total === undefined ? (
+            <InlineSkeleton />
+          ) : (
+            rewards?.month?.total?.toLocaleString() + ' TNT'
+          )}
         </div>
       ),
     },

@@ -1,20 +1,23 @@
 import React from 'react'
 import { Card } from 'antd'
-import AppLayout, { Content } from '../components/AppLayout'
-import { useValidators } from '../data/validators'
+import AppLayout, { Content } from '../../components/AppLayout'
+import { useValidators } from '../../data/validators'
 import dynamic from 'next/dynamic'
-import TopBanner from '../components/AppLayout/TopBanner'
-import ValidatorImg from '../public/images/validator.svg'
-import ValidatorsTable from '../components/Validators/ValidatorsTable'
-import ValidatorsStats from '../components/Validators/ValidatorsStats'
-import ValidatorFlags from '../components/Validators/ValidatorFlags'
+import TopBanner from '../../components/AppLayout/TopBanner'
+import ValidatorImg from '../../public/images/validator.svg'
+import ValidatorsTable from '../../components/Validators/ValidatorsTable'
+import ValidatorsStats from '../../components/Validators/ValidatorsStats'
+import ValidatorFlags from '../../components/Validators/ValidatorFlags'
 
-const Map = dynamic(() => import('../components/Validators/ValidatorsMapbox'), {
-  ssr: false,
-  loading: () => (
-    <span style={{ minHeight: 600, backgroundColor: '#324b61' }} />
-  ),
-})
+const Map = dynamic(
+  () => import('../../components/Validators/ValidatorsMapbox'),
+  {
+    ssr: false,
+    loading: () => (
+      <span style={{ minHeight: 600, backgroundColor: '#324b61' }} />
+    ),
+  },
+)
 
 const Consensus = () => {
   const { validators } = useValidators()

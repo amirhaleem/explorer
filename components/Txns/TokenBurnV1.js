@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Descriptions, Skeleton } from 'antd'
+import { Descriptions } from 'antd'
 import Link from 'next/link'
 import AccountIcon from '../AccountIcon'
 import { Balance, CurrencyType } from '@helium/currency'
 import { Client, Network } from '@helium/http'
-
-const InlineSkeleton = () => (
-  <span className="inline-skeleton-override">
-    <Skeleton active paragraph={{ rows: 0 }} size="small" />
-  </span>
-)
+import InlineSkeleton from '../InlineSkeleton'
 
 const TokenBurnV1 = ({ txn }) => {
   const txnAmountObject = new Balance(
