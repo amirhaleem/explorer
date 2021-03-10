@@ -149,6 +149,15 @@ export const generateColumns = (
       ),
     },
     {
+      title: 'Version',
+      dataIndex: 'status.release_version',
+      key: 'status.release_version',
+      sorter: (a, b) => a.status.release_version - b.status.release_version,
+      sortDirections: ['descend'],
+      defaultSortOrder: 'desc',
+      render: (version) => <span>{version}</span>,
+    },
+    {
       title: 'Location',
       dataIndex: 'geo',
       key: 'location',
