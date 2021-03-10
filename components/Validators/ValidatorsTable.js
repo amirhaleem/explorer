@@ -256,10 +256,8 @@ const ValidatorsTable = ({ dataSource = [], loading }) => {
     favoriteValidators,
     setFavoriteValidators,
   ] = useFavoriteValidatorsState({})
-  console.log('fav', favoriteValidators)
 
   const toggleFavoriteValidators = (address) => () => {
-    console.log('toggle fav validators', address, favoriteValidators)
     setFavoriteValidators({
       ...favoriteValidators,
       [address]: !favoriteValidators[address],
