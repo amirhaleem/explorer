@@ -4,10 +4,12 @@ import { Table, Typography, Tooltip } from 'antd'
 import animalHash from 'angry-purple-tiger'
 import ReactCountryFlag from 'react-country-flag'
 import ValidatorStatus from './ValidatorStatus'
+import ValidatorVersion from './ValidatorVersion'
 import ConsensusIndicator from './ConsensusIndicator'
 import { truncate, upperCase } from 'lodash'
 import { StarOutlined, StarFilled } from '@ant-design/icons'
 import createPersistedState from 'use-persisted-state'
+import compareVersions from 'compare-versions'
 import { useElections } from '../../data/consensus'
 import InlineSkeleton from '../InlineSkeleton'
 
@@ -32,6 +34,18 @@ const formatISP = (isp) => {
       separator: ' ',
     }),
   )
+}
+
+const normalizeVersion = (version) => {
+  if (!version) return '0.0.0'
+
+  if (version.match(/\+/)) {
+    return version.split('+')[0]
+  }
+
+  if (!version.match(/^\d+\.\d+\.\d+$/)) return '0.0.0'
+
+  return version
 }
 
 export const generateColumns = (
@@ -150,12 +164,17 @@ export const generateColumns = (
     },
     {
       title: 'Version',
-      dataIndex: 'status.release_version',
-      key: 'status.release_version',
-      sorter: (a, b) => a.status.release_version - b.status.release_version,
-      sortDirections: ['descend'],
-      defaultSortOrder: 'desc',
-      render: (version) => <span>{version}</span>,
+      dataIndex: 'status',
+      key: 'release_version',
+      sorter: (a, b) =>
+        compareVersions(
+          normalizeVersion(a?.status?.release_version),
+          normalizeVersion(b?.status?.release_version),
+        ),
+      sortDirections: ['descend', 'ascend'],
+      render: ({ release_version: version }) => (
+        <ValidatorVersion version={version} />
+      ),
     },
     {
       title: 'Location',
