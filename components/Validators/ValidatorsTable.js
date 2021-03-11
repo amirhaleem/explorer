@@ -39,13 +39,15 @@ const formatISP = (isp) => {
 const normalizeVersion = (version) => {
   if (!version) return '0.0.0'
 
+  let versionPart = version
+
   if (version.match(/\+/)) {
-    return version.split('+')[0]
+    versionPart = version.split('+')[0]
   }
 
-  if (!version.match(/^\d+\.\d+\.\d+$/)) return '0.0.0'
+  if (!versionPart.match(/^\d+\.\d+\.\d+$/)) return '0.0.0'
 
-  return version
+  return versionPart
 }
 
 export const generateColumns = (
