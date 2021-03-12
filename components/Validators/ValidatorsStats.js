@@ -1,12 +1,31 @@
 import React from 'react'
 import { Card, Row, Col, Tooltip, Typography, Table, Collapse } from 'antd'
+import { differenceInDays } from 'date-fns'
+import { round, clamp } from 'lodash'
 import { useStats } from '../../data/stats'
 import { useElections } from '../../data/consensus'
 import { useValidators } from '../../data/validators'
 import { formatDistanceToNow, format } from 'date-fns'
 import Widget from '../Home/Widget'
 import withBlockHeight from '../withBlockHeight'
-import { round, sum } from 'lodash'
+
+const calculateValidatorAPY = (numValidators) => {
+  const preHalvingTokensPerDay = 300000 / 30
+  const postHalvingTokensPerDay = preHalvingTokensPerDay / 2
+  const daysTilHalving = clamp(
+    differenceInDays(new Date('2021-08-01'), new Date()),
+    0,
+    365,
+  )
+  const daysAfterHalving = 365 - daysTilHalving
+  const blendedTokensPerDay =
+    preHalvingTokensPerDay * daysTilHalving +
+    daysAfterHalving * postHalvingTokensPerDay
+  const annualTokensPerValidator = blendedTokensPerDay / numValidators
+  const stake = 10000
+
+  return round((annualTokensPerValidator / stake) * 100, 2)
+}
 
 const ValidatorsStats = ({ height, heightLoading }) => {
   const { isLoading: isLoadingStats, stats } = useStats()
@@ -51,11 +70,8 @@ const ValidatorsStats = ({ height, heightLoading }) => {
       <Col xs={24} md={12} lg={6}>
         <Widget
           title="Estimated APY (HNT)"
-          value={`${round(
-            (((300000 / activeValidators) * 12) / 10000) * 100,
-            2,
-          )}%`}
-          subtitle={`Pre-halving with ${activeValidators.toLocaleString()} active validators`}
+          value={`${calculateValidatorAPY(activeValidators)}%`}
+          subtitle={`${activeValidators.toLocaleString()} active validators`}
           tooltip={`Pre-halving, 300k HNT per month on average is distributed between active consensus members`}
         />
       </Col>
