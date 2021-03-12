@@ -67,13 +67,6 @@ const Consensus = ({ validators: initialValidators }) => {
   )
 }
 
-export async function getStaticPaths() {
-  return {
-    paths: [],
-    fallback: 'blocking',
-  }
-}
-
 export async function getStaticProps() {
   const validators = await fetchValidators()
 
@@ -81,6 +74,7 @@ export async function getStaticProps() {
     props: {
       validators: JSON.parse(JSON.stringify(validators)),
     },
+    revalidate: 10,
   }
 }
 
