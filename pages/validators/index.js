@@ -2,6 +2,7 @@ import React from 'react'
 import { Card } from 'antd'
 import AppLayout, { Content } from '../../components/AppLayout'
 import { useValidators } from '../../data/validators'
+import { fetchValidators } from '../../pages/api/validators'
 import dynamic from 'next/dynamic'
 import TopBanner from '../../components/AppLayout/TopBanner'
 import ValidatorImg from '../../public/images/validator.svg'
@@ -19,8 +20,8 @@ const Map = dynamic(
   },
 )
 
-const Consensus = () => {
-  const { validators } = useValidators()
+const Consensus = ({ validators: initialValidators }) => {
+  const { validators } = useValidators(initialValidators)
   const elected = (validators || []).filter((v) => v.elected)
 
   return (
@@ -64,6 +65,23 @@ const Consensus = () => {
       </Content>
     </AppLayout>
   )
+}
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  }
+}
+
+export async function getStaticProps() {
+  const validators = await fetchValidators()
+
+  return {
+    props: {
+      validators: JSON.parse(JSON.stringify(validators)),
+    },
+  }
 }
 
 export default Consensus

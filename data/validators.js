@@ -6,11 +6,10 @@ export const fetchValidators = async () => {
   return response.json()
 }
 
-export const fetchCurrentValidators = async () => {}
-
-export const useValidators = () => {
+export const useValidators = (initialData) => {
   const { data, error } = useSWR('validators', fetchValidators, {
     refreshInterval: 10000,
+    initialData,
   })
   return {
     validators: data || [],

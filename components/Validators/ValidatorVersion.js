@@ -4,8 +4,17 @@ import { Tooltip } from 'antd'
 const ValidatorVersion = ({ version }) => {
   if (!version) return null
 
+  let versionPart = version
   if (version.match(/\+/)) {
-    return <Tooltip title={version}>{version.split('+')[0]}*</Tooltip>
+    versionPart = version.split('+')[0]
+  }
+
+  if (!versionPart.match(/^\d+\.\d+\.\d+$/)) {
+    return <Tooltip title={version}>other*</Tooltip>
+  }
+
+  if (versionPart !== version) {
+    return <Tooltip title={version}>{versionPart}*</Tooltip>
   }
 
   return <span>{version}</span>

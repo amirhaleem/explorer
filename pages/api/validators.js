@@ -48,7 +48,7 @@ const getRewards = async ({ address }) => {
   })
 }
 
-const fetchValidators = async () => {
+export const fetchValidators = async () => {
   const validators = await fetchAll('/validators')
   const elected = await fetchAll('/validators/elected')
   const electedAddresses = elected.map((e) => e.address)

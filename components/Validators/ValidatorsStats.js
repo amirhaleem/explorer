@@ -50,12 +50,13 @@ const ValidatorsStats = ({ height, heightLoading }) => {
       </Col>
       <Col xs={24} md={12} lg={6}>
         <Widget
-          title="Estimated APY"
+          title="Estimated APY (HNT)"
           value={`${round(
             (((300000 / activeValidators) * 12) / 10000) * 100,
             2,
           )}%`}
-          subtitle="Pre-halving"
+          subtitle={`Pre-halving with ${activeValidators.toLocaleString()} active validators`}
+          tooltip={`Pre-halving, 300k HNT per month on average is distributed between active consensus members`}
         />
       </Col>
       <Col xs={24} md={12} lg={6}>
