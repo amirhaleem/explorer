@@ -170,7 +170,7 @@ export const generateColumns = (
       key: 'version_heartbeat',
       sorter: (a, b) => a.version_heartbeat - b.version_heartbeat,
       sortDirections: ['descend', 'ascend'],
-      render: ({ version_heartbeat: version }) => <span>{version}</span>,
+      render: (version) => <span>{version}</span>,
     },
     {
       title: 'Location',
