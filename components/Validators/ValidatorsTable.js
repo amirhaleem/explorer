@@ -167,16 +167,14 @@ export const generateColumns = (
     {
       title: 'Version',
       dataIndex: 'status',
-      key: 'release_version',
+      key: 'version_heartbeat',
       sorter: (a, b) =>
         compareVersions(
-          normalizeVersion(a?.status?.release_version),
-          normalizeVersion(b?.status?.release_version),
+          normalizeVersion(a?.status?.version_heartbeat),
+          normalizeVersion(b?.status?.version_heartbeat),
         ),
       sortDirections: ['descend', 'ascend'],
-      render: ({ release_version: version }) => (
-        <ValidatorVersion version={version} />
-      ),
+      render: ({ version_heartbeat: version }) => <span>{version}</span>,
     },
     {
       title: 'Location',
