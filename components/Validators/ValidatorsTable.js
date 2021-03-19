@@ -166,7 +166,7 @@ export const generateColumns = (
     },
     {
       title: 'Version',
-      dataIndex: 'status',
+      dataIndex: 'version_heartbeat',
       key: 'version_heartbeat',
       sorter: (a, b) =>
         compareVersions(
