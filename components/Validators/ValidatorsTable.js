@@ -168,11 +168,7 @@ export const generateColumns = (
       title: 'Version',
       dataIndex: 'version_heartbeat',
       key: 'version_heartbeat',
-      sorter: (a, b) =>
-        compareVersions(
-          normalizeVersion(a?.status?.version_heartbeat),
-          normalizeVersion(b?.status?.version_heartbeat),
-        ),
+      sorter: (a, b) => a.version_heartbeat - b.version_heartbeat,
       sortDirections: ['descend', 'ascend'],
       render: ({ version_heartbeat: version }) => <span>{version}</span>,
     },
