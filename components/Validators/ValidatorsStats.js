@@ -1,13 +1,14 @@
 import React from 'react'
-import { Card, Row, Col, Tooltip, Typography, Table, Collapse } from 'antd'
+import { Row, Col } from 'antd'
 import { differenceInDays } from 'date-fns'
-import { round, clamp } from 'lodash'
+import { round, clamp, maxBy } from 'lodash'
 import { useStats } from '../../data/stats'
 import { useElections } from '../../data/consensus'
 import { useValidators } from '../../data/validators'
 import { formatDistanceToNow, format } from 'date-fns'
 import Widget from '../Home/Widget'
 import withBlockHeight from '../withBlockHeight'
+import VersionProgress from './VersionProgress'
 
 const calculateValidatorAPY = (numValidators) => {
   const preHalvingTokensPerDay = 300000 / 30
@@ -90,15 +91,16 @@ const ValidatorsStats = ({ height, heightLoading }) => {
       </Col>
       <Col xs={24} md={12} lg={6}>
         <Widget
-          title="Election Times (30d)"
-          value={`${round(
-            stats.electionTimes.lastMonth.avg / 60,
-            1,
-          ).toLocaleString()} min`}
-          subtitle={`${round(
-            stats.electionTimes.lastMonth.stddev / 60,
-            1,
-          ).toLocaleString()} min std dev`}
+          title="Validator Versions"
+          valueComponent={<VersionProgress validators={validators} />}
+          subtitle={
+            <span>
+              Latest:{' '}
+              <span className="text-mono">
+                {maxBy(validators, 'version_heartbeat').version_heartbeat}
+              </span>
+            </span>
+          }
         />
       </Col>
       <Col xs={24} md={12} lg={6}>

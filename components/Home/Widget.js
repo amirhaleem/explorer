@@ -10,6 +10,7 @@ const Widget = ({
   title,
   subtitle,
   value,
+  valueComponent,
   footer,
   href,
   change,
@@ -63,6 +64,7 @@ const Widget = ({
             </div>
           )}
         </Row>
+        {!value && valueComponent && <Row align="middle">{valueComponent}</Row>}
         {subtitle && (
           <Text type="secondary" style={{ paddingLeft: 4 }}>
             {subtitle}
