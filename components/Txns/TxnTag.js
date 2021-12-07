@@ -15,6 +15,11 @@ const CONFIG = {
     name: 'PoC Receipt',
     tooltip: 'Proof of Coverage Receipt',
   },
+  poc_receipts_v2: {
+    color: '#38A2FF',
+    name: 'PoC Receipt',
+    tooltip: 'Proof of Coverage Receipt',
+  },
   rewards_v1: {
     color: '#E68B00',
     name: 'Mining Reward',

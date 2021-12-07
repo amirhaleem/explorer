@@ -262,6 +262,7 @@ const columns = (ownerAddress) => {
       case 'rewards_v1':
         return <span>{txn.totalAmount.toString(2)}</span>
       case 'poc_receipts_v1':
+      case 'poc_receipts_v2':
         let detailText = ''
         if (txn.challenger === ownerAddress) {
           detailText = 'Challenger'

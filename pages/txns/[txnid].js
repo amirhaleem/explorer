@@ -44,6 +44,7 @@ const txnView = (txn) => {
     case 'poc_request_v1':
       return <PocRequestV1 txn={txn} />
     case 'poc_receipts_v1':
+    case 'poc_receipts_v2':
       return <PocReceiptsV1 txn={txn} />
     case 'rewards_v1':
       return <RewardsV1 txn={txn} />

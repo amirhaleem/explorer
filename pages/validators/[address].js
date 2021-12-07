@@ -95,7 +95,7 @@ const Validator = ({ hotspot }) => {
 
       // Get most recent challengee transaction
       const challengeeTxnList = await client.hotspot(hotspotid).activity.list({
-        filterTypes: ['poc_receipts_v1'],
+        filterTypes: ['poc_receipts_v1', 'poc_receipts_v2'],
       })
       const challengeeTxn = await challengeeTxnList.take(1)
 
